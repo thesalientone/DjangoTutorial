@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Questions</title>
+</head>
+<body>
+    
+    {% if question %}
+
+        <p><strong>Question #{{question.id}}</strong></p>
+        <br />
+        <p>Unsorted List</p>
+        {% if question.choice_set.count > 0 %}
+
+            {% load poll_extras %}
+            <ol type="1">
+            
+            {% for choice in  question.choice_set.all %}
+            
+                <li>: {{ choice.choice_text}} - {{choice.votes}} Votes </li> 
+
+            {% endfor %}
+            </ol>
+            <p>Sorted List</p>
+             <ol type="1">
+                 {% for choice in question.choice_set.all|sortVote %}
+                    <li>{{choice.1}} - {{choice.0}}</li>
+                 {% endfor %}
+             </ol>   
+
+
+        {% endif %}
+
+    {% else %}
+        <p> The question didn't exist </p>
+
+    {% endif %}
+
+</body>
+</html>
